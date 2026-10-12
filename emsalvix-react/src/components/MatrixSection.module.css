@@ -1,0 +1,128 @@
+.section {
+  padding: 6rem 0;
+  background: var(--color-surface-container-lowest);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.sectionTitle {
+  color: var(--color-on-surface);
+}
+
+.sectionDesc {
+  color: var(--color-on-surface-variant);
+  max-width: 500px;
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.chip {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: 0.01em;
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background: var(--color-surface-container-high);
+  border-color: rgba(47, 217, 244, 0.2);
+}
+
+.chipActive {
+  background: var(--color-secondary-container);
+  color: white;
+  box-shadow: 0 4px 16px rgba(47, 107, 255, 0.3);
+  border-color: transparent;
+}
+
+.chipActive:hover {
+  background: var(--color-secondary-container);
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.fadeIn {
+  opacity: 1;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.card {
+  background: var(--color-surface-container);
+  padding: var(--space-xl);
+  border-radius: 16px;
+  border: 1px solid rgba(70, 70, 77, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(47, 217, 244, 0.25);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.cardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  background: var(--color-primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  color: var(--color-on-surface);
+}
+
+.cardDesc {
+  color: var(--color-on-surface-variant);
+  line-height: 1.6;
+}

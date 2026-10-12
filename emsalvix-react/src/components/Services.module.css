@@ -1,0 +1,146 @@
+.section {
+  padding: 6rem 0;
+  background: var(--color-surface-container-lowest);
+  position: relative;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.sectionTitle {
+  color: var(--color-on-surface);
+  max-width: 600px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  background: rgba(28, 32, 37, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(70, 70, 77, 0.15);
+  padding: var(--space-xl);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(47, 217, 244, 0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  background: var(--color-surface-container);
+  border-color: rgba(47, 217, 244, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(47, 107, 255, 0.15);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.iconWrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--color-secondary-container);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+  transform: scale(1.1);
+}
+
+.cardTitle {
+  color: var(--color-on-surface);
+  font-size: 1.5rem;
+}
+
+.cardDesc {
+  color: var(--color-on-surface-variant);
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+  list-style: none;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  color: var(--color-on-surface-variant);
+  line-height: 1.54;
+}
+
+.cardFooter {
+  padding-top: var(--space-xl);
+}
+
+.learnMore {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.card:hover .learnMore {
+  color: var(--color-tertiary);
+  gap: var(--space-sm);
+}
