@@ -236,3 +236,15 @@
   color: var(--color-on-surface-variant);
   max-width: 360px;
 }
+
+.errorMessage {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}

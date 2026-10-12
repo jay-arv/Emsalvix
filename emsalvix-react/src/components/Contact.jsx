@@ -22,19 +22,52 @@ const Contact = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormState(prev => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
+    setError('');
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '771d65c9-d5f0-4d2e-9428-e4f9c38c6d2c';
+    const industryLabel = industries.find(i => i.value === formState.industry)?.label || formState.industry;
+
+    const payload = {
+      access_key: accessKey,
+      name: formState.name,
+      email: formState.email,
+      subject: formState.subject || 'New Enquiry from Emsalvix Website',
+      industry: industryLabel,
+      message: formState.message,
+      from_name: 'Emsalvix Website',
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitted(true);
+        setFormState({ name: '', email: '', subject: '', industry: 'smb', message: '' });
+      } else {
+        setError(result.message || 'Failed to submit enquiry. Please try again.');
+      }
+    } catch (err) {
+      setError('Unable to send enquiry due to a network error. Please try again.');
+    } finally {
       setSending(false);
-      setSubmitted(true);
-      setFormState({ name: '', email: '', subject: '', industry: 'smb', message: '' });
-    }, 1200);
+    }
   };
 
   return (
@@ -98,6 +131,12 @@ const Contact = () => {
               </div>
             ) : (
               <form className={styles.form} id="contact-form" onSubmit={handleSubmit}>
+                {error && (
+                  <div className={styles.errorMessage}>
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>error</span>
+                    <span>{error}</span>
+                  </div>
+                )}
                 <div className={styles.formRow}>
                   <div className={styles.fieldGroup}>
                     <label className={`label-md ${styles.label}`} htmlFor="name">Name *</label>
