@@ -13,7 +13,7 @@ const industries = [
 const contactInfo = [
   { icon: 'mail', label: 'Email Us', value: 'support@emsalvix.com' },
   { icon: 'call', label: 'Call Us', value: '+1 (800) 555-EMSA' },
-  { icon: 'schedule', label: 'Business Hours', value: 'Mon – Fri: 8:00 AM – 6:00 PM EST' },
+  { icon: 'schedule', label: 'Business Hours', value: 'Mon – Fri: :00 AM – 6:00 PM EST' },
 ];
 
 const Contact = () => {
