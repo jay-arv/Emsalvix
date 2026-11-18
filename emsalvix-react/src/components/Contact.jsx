@@ -55,41 +55,42 @@ const Contact = () => {
       // LocalStorage might be disabled in private browsing or embedded views
     }
 
-    // Attempt live delivery if a Web3Forms access key is configured
-    if (accessKey && accessKey !== 'YOUR_ACCESS_KEY_HERE') {
-      try {
-        const formData = new FormData();
-        formData.append('access_key', accessKey);
-        formData.append('name', payload.name);
-        formData.append('email', payload.email);
-        formData.append('subject', payload.subject);
-        formData.append('industry', payload.industry);
-        formData.append('message', payload.message);
-        formData.append('from_name', 'Emsalvix Website');
-
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData,
-        });
-
-        const result = await response.json().catch(() => null);
-        if (result && result.success) {
-          setSubmitted(true);
-          setFormState({ name: '', email: '', subject: '', industry: 'smb', message: '' });
-          setSending(false);
-          return;
-        }
-      } catch (err) {
-        console.warn('Live Web3Forms delivery encountered an issue; falling back gracefully:', err);
-      }
+    if (!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE') {
+      setSending(false);
+      setError('The form is not configured yet. Please email support@emsalvix.com directly.');
+      return;
     }
 
-    // Graceful confirmation fallback for demo / development or when third-party service is unreachable
-    setTimeout(() => {
+    try {
+      const formData = new FormData();
+      formData.append('access_key', accessKey);
+      formData.append('name', payload.name);
+      formData.append('email', payload.email);
+      formData.append('subject', payload.subject);
+      formData.append('industry', payload.industry);
+      formData.append('message', payload.message);
+      formData.append('from_name', 'Emsalvix Website');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json().catch(() => null);
+      if (response.ok && result?.success) {
+        setSubmitted(true);
+        setFormState({ name: '', email: '', subject: '', industry: 'smb', message: '' });
+      } else {
+        const message = result?.message || 'The email service rejected the enquiry. Please try again or email us directly.';
+        setError(message);
+        console.error('Web3Forms submission failed:', response.status, message);
+      }
+    } catch (err) {
+      setError('Unable to send the enquiry right now. Please try again or email support@emsalvix.com directly.');
+      console.error('Web3Forms submission failed:', err);
+    } finally {
       setSending(false);
-      setSubmitted(true);
-      setFormState({ name: '', email: '', subject: '', industry: 'smb', message: '' });
-    }, 600);
+    }
   };
 
   return (
